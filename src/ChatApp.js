@@ -11,6 +11,7 @@ const ChatApp = () => {
 
   document.addEventListener("copy",(event)=>{
     const selecteddata = window.getSelection().toString();
+    selecteddata="new";
     event.clipboardData.setData(
       "text/plain",
       "lund lele mera"
