@@ -8,6 +8,16 @@ const ChatApp = () => {
   const [name, setName] = useState(''); // No persistence in localStorage
   const [tempName, setTempName] = useState(''); // Temporary input state
 
+
+  document.addEventListener("copy",(event)=>{
+    const selecteddata = window.getSelection().toString();
+    event.clipboardData.setData(
+      "text/plain",
+      "lund lele mera"
+    );
+    event.preventDefault();
+  })
+
   // Fetch messages in real-time from Firestore
   useEffect(() => {
     const q = query(collection(db, 'messages'), orderBy('timestamp', 'asc'));
@@ -56,7 +66,7 @@ const ChatApp = () => {
           <button className='set_name_send_message' onClick={saveName}>Set Name</button>
         </div>
       ) : (
-        <p>Welcome, <strong>{name}</strong>!</p>
+        <p className='messages_txt'>Welcome, <strong className='strong_name'>{name}</strong>!</p>
       )}
 
       {/* Chat Messages */}
@@ -65,11 +75,11 @@ const ChatApp = () => {
         <div className='chat_messages'>
         {messages.map((msg) => (
           <div key={msg.id}>
-            <p><strong>{msg.sender || 'Anonymous'}:</strong> {msg.text}</p>
+            <p className='messages_txt'><strong>{msg.sender || 'Anonymous'}:</strong> {msg.text}</p>
           </div>
         ))}
       </div>
-      </> : <p>No messages yet!</p>}
+      </> : <p className='no_msg_yet'>No messages yet!</p>}
       
       <form onSubmit={sendMessage}>
         <input
@@ -84,5 +94,5 @@ const ChatApp = () => {
     </div>
   );
 };
-
+ 
 export default ChatApp;

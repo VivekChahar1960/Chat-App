@@ -10,20 +10,28 @@
     margin: 0;
     color: black;
     padding-top: 2rem;
-    font-size: 3rem;
+    font-size: 4rem;
     padding-bottom: 2rem;
+}
+.no_msg_yet{
+    font-size: 1.5rem;
+}
+.messages_txt{
+    font-size: 1.5rem;
 }
 input{
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
-    font-size: 1rem;
+    font-size: 1.5rem;
     padding: 0.25rem;
     padding:0.25 1rem;
     margin-top: 1rem;
     border: none;
+    right: auto;
+    left:0;
 }
 .set_name_send_message{
-    font-size: 1rem;
+    font-size: 1.5rem;
     padding: 0.25rem;
     border: none;
     border-top-right-radius: 5px;
