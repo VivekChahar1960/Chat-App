@@ -93,8 +93,10 @@
 
 .chat_messages {
   padding: 10px;
-  height: calc(100% - 60px);
+  padding-bottom: 20px; /* Add padding to prevent last message from being obscured */
+  height: calc(100% - 70px); /* Adjust for actual chat_input_bar height */
   overflow-y: auto;
+  box-sizing: border-box;
 }
 
 .chat_messages p {
@@ -115,6 +117,8 @@
   background-color: #f1f1f1;
   border-top: 1px solid #ccc;
   box-sizing: border-box;
+  height: 70px; /* Explicit height to match height calculation */
+  align-items: center;
 }
 
 .chat_input_bar input {
