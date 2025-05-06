@@ -137,7 +137,7 @@ const ChatApp = () => {
             <button className="leave_group" onClick={() => setCurrentGroup('')}>Leave Group</button>
           </div>
 
-          <div className="chat_wrapper">
+          <div className="chat_wrapper" ref={messagesEndRef}>
             <div className='chat_messages' ref={chatMessagesRef}>
               {messages.map((msg) => (
                 <p className='messages_txt' key={msg.id}>
@@ -147,7 +147,7 @@ const ChatApp = () => {
             </div>
 
             {/* This is the reference point to scroll to the bottom */}
-            <div ref={messagesEndRef} />
+            <div  />
 
             <form className="chat_input_bar" onSubmit={sendMessage}>
               <input
