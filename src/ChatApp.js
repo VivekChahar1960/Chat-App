@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { db, ref, onValue, push, set } from './firebase';
 import './ChatApp.css';
 
@@ -11,6 +11,9 @@ const ChatApp = () => {
   const [name, setName] = useState('');
   const [tempName, setTempName] = useState('');
 
+  const messagesEndRef = useRef(null);  // Ref for auto-scrolling
+
+  // 🔁 Load groups list
   useEffect(() => {
     const groupsRef = ref(db, 'groups');
     onValue(groupsRef, (snapshot) => {
@@ -23,6 +26,7 @@ const ChatApp = () => {
     });
   }, []);
 
+  // 🔁 Load messages for selected group
   useEffect(() => {
     if (!currentGroup) return;
 
@@ -40,6 +44,13 @@ const ChatApp = () => {
       }
     });
   }, [currentGroup]);
+
+  useEffect(() => {
+    // Scroll to bottom when a new message is added
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages]);
 
   const createGroup = async () => {
     if (groupName.trim()) {
@@ -129,6 +140,9 @@ const ChatApp = () => {
                 </p>
               ))}
             </div>
+
+            {/* This is the reference point to scroll to the bottom */}
+            <div ref={messagesEndRef} />
 
             <form className="chat_input_bar" onSubmit={sendMessage}>
               <input
