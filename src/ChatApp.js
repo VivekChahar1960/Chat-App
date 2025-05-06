@@ -7,7 +7,7 @@ const ChatApp = () => {
   const [message, setMessage] = useState('');
   const [name, setName] = useState('');
   const [tempName, setTempName] = useState('');
-
+  console.log("🔥 Using Firebase Realtime Database at URL:", db._repo?.repoInfo_.host || 'Unknown');
   // Real-time listener for messages
   useEffect(() => {
     const messagesRef = ref(db, 'messages');
