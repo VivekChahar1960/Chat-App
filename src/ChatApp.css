@@ -1,51 +1,99 @@
-.main_body{
-    background-color: lightblue;
+/* Body Layout */
+.main_body {
+    background: linear-gradient(to bottom right, #dff6ff, #b8e2f2);
     margin: 0;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-bottom: 3rem;
-}
-.main_name{
-    margin: 0;
-    color: black;
-    padding-top: 2rem;
-    font-size: 4rem;
-    padding-bottom: 2rem;
-}
-.no_msg_yet{
-    font-size: 1.5rem;
-}
-.messages_txt{
-    font-size: 1.5rem;
-}
-input{
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    font-size: 1.5rem;
-    padding: 0.25rem;
-    padding:0.25 1rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  /* Header */
+  .main_name {
+    color: #2b2b2b;
+    font-size: 3.5rem;
+    padding: 2rem 0 1rem;
+  }
+  
+  /* Message Area */
+  .chat_messages {
+    width: 100%;
+    max-width: 500px;
+    height: 60vh;
+    overflow-y: auto;
+    background-color: white;
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    margin-bottom: 1rem;
+  }
+  
+  /* Individual message bubble */
+  .chat_messages p {
+    margin: 0.5rem 0;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    background-color: #f1f1f1;
+    align-self: flex-start;
+    max-width: 80%;
+    word-wrap: break-word;
+  }
+  
+  .chat_messages p strong {
+    color: #0077cc;
+  }
+  
+  /* Inputs and Buttons */
+  input[type="text"] {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
     margin-top: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    outline: none;
+    width: 70%;
+    max-width: 300px;
+    margin-right: 0.5rem;
+  }
+  
+  .set_name_send_message {
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
     border: none;
-    right: auto;
-    left:0;
-}
-.set_name_send_message{
-    font-size: 1.5rem;
-    padding: 0.25rem;
+    background-color: #ff8c42;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  
+  .set_name_send_message:hover {
+    background-color: #ff7522;
+  }
+  
+  /* System messages */
+  .no_msg_yet,
+  .messages_txt {
+    font-size: 1.25rem;
+    margin-top: 1rem;
+    text-align: center;
+  }
+  
+  /* Group buttons */
+  button {
+    margin: 0.3rem;
+    padding: 0.4rem 1rem;
+    font-size: 1rem;
     border: none;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-    background-color: rgb(251, 145, 88);
-    padding:0.25 1rem;
-}
-.chat_messages{
-    width: 350px;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    padding: 1rem 0 2rem 0;
-}
-.chat_messages p{
-    margin: 0.25rem;
-}
+    background-color: #0096c7;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0077a6;
+  }
+  

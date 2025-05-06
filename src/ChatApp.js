@@ -11,8 +11,6 @@ const ChatApp = () => {
   const [name, setName] = useState('');
   const [tempName, setTempName] = useState('');
 
-  console.log("🔥 Using Firebase Realtime Database");
-
   // 🔁 Load groups list
   useEffect(() => {
     const groupsRef = ref(db, 'groups');
