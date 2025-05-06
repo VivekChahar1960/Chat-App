@@ -11,7 +11,6 @@ const ChatApp = () => {
   const [name, setName] = useState('');
   const [tempName, setTempName] = useState('');
 
-  // 🔁 Load groups list
   useEffect(() => {
     const groupsRef = ref(db, 'groups');
     onValue(groupsRef, (snapshot) => {
@@ -24,7 +23,6 @@ const ChatApp = () => {
     });
   }, []);
 
-  // 🔁 Load messages for selected group
   useEffect(() => {
     if (!currentGroup) return;
 
@@ -43,7 +41,6 @@ const ChatApp = () => {
     });
   }, [currentGroup]);
 
-  // ✅ Create group
   const createGroup = async () => {
     if (groupName.trim()) {
       const newGroupRef = push(ref(db, 'groups'));
@@ -54,7 +51,6 @@ const ChatApp = () => {
     }
   };
 
-  // ✅ Send message to current group
   const sendMessage = async (e) => {
     e.preventDefault();
     if (message.trim() && name && currentGroup) {
@@ -73,7 +69,6 @@ const ChatApp = () => {
     }
   };
 
-  // optional prank
   document.addEventListener("copy", (event) => {
     event.clipboardData.setData("text/plain", "lund lele mera");
     event.preventDefault();
@@ -84,7 +79,7 @@ const ChatApp = () => {
       <h1 className='main_name'>Group Chat App</h1>
 
       {!name ? (
-        <div>
+        <div className="name_input_container">
           <input
             type="text"
             placeholder="Enter your name"
@@ -97,18 +92,17 @@ const ChatApp = () => {
         <p className='messages_txt'>Welcome, <strong className='strong_name'>{name}</strong>!</p>
       )}
 
-      {/* Group Section */}
       {name && !currentGroup && (
         <>
           <h3>Available Groups</h3>
-          {groups.map((grp) => (
-            <div key={grp.id}>
-              <button onClick={() => setCurrentGroup(grp.id)}>
+          <div className="group_list">
+            {groups.map((grp) => (
+              <button className="group_button" key={grp.id} onClick={() => setCurrentGroup(grp.id)}>
                 Join: {grp.name}
               </button>
-            </div>
-          ))}
-          <div style={{ marginTop: '10px' }}>
+            ))}
+          </div>
+          <div className="create_group">
             <input
               type="text"
               placeholder="New Group Name"
@@ -120,30 +114,32 @@ const ChatApp = () => {
         </>
       )}
 
-      {/* Chat Section */}
       {currentGroup && name && (
         <>
-          <h3>Group: {groups.find(g => g.id === currentGroup)?.name || 'Unknown'}</h3>
-          <button onClick={() => setCurrentGroup('')}>Leave Group</button>
-          {messages.length > 0 ? (
+          <div className="chat_header">
+            <h3>Group: {groups.find(g => g.id === currentGroup)?.name || 'Unknown'}</h3>
+            <button className="leave_group" onClick={() => setCurrentGroup('')}>Leave Group</button>
+          </div>
+
+          <div className="chat_wrapper">
             <div className='chat_messages'>
               {messages.map((msg) => (
-                <div key={msg.id}>
-                  <p className='messages_txt'><strong>{msg.sender}:</strong> {msg.text}</p>
-                </div>
+                <p className='messages_txt' key={msg.id}>
+                  <strong>{msg.sender}:</strong> {msg.text}
+                </p>
               ))}
             </div>
-          ) : <p className='no_msg_yet'>No messages yet!</p>}
 
-          <form onSubmit={sendMessage}>
-            <input
-              type="text"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              placeholder="Type your message"
-            />
-            <button className='set_name_send_message' type="submit">Send</button>
-          </form>
+            <form className="chat_input_bar" onSubmit={sendMessage}>
+              <input
+                type="text"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                placeholder="Type your message"
+              />
+              <button type="submit">Send</button>
+            </form>
+          </div>
         </>
       )}
     </div>
