@@ -1,9 +1,16 @@
+// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth";
-import { getFirestore, collection, addDoc, query, where, getDocs, onSnapshot, orderBy, serverTimestamp } from "firebase/firestore";
+import { getAnalytics } from "firebase/analytics";
+import { getDatabase, ref, onValue, push, serverTimestamp } from 'firebase/database';
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyApn-U8Sy9XWSUk2hYVrfCJKNWas2msDoY",
   authDomain: "superchat-76ef9.firebaseapp.com",
+  databaseURL: "https://superchat-76ef9-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "superchat-76ef9",
   storageBucket: "superchat-76ef9.firebasestorage.app",
   messagingSenderId: "804358173475",
@@ -11,8 +18,8 @@ const firebaseConfig = {
   measurementId: "G-99KPVPSFSB"
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+const db = getDatabase(app);
 
-export { auth, db, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, collection, addDoc, query, where, getDocs, onSnapshot, orderBy, serverTimestamp };
+export { db, ref, onValue, push, serverTimestamp };
