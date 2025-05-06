@@ -12,6 +12,7 @@ const ChatApp = () => {
   const [tempName, setTempName] = useState('');
 
   const messagesEndRef = useRef(null);  // Ref for auto-scrolling
+  const chatMessagesRef = useRef(null); // Ref for chat message container
 
   // 🔁 Load groups list
   useEffect(() => {
@@ -45,10 +46,14 @@ const ChatApp = () => {
     });
   }, [currentGroup]);
 
+  // 🔁 Auto-scroll to the latest message
   useEffect(() => {
-    // Scroll to bottom when a new message is added
     if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+      // Check if the user is already at the bottom
+      const isAtBottom = chatMessagesRef.current.scrollHeight === chatMessagesRef.current.scrollTop + chatMessagesRef.current.clientHeight;
+      if (isAtBottom) {
+        messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   }, [messages]);
 
@@ -133,7 +138,7 @@ const ChatApp = () => {
           </div>
 
           <div className="chat_wrapper">
-            <div className='chat_messages'>
+            <div className='chat_messages' ref={chatMessagesRef}>
               {messages.map((msg) => (
                 <p className='messages_txt' key={msg.id}>
                   <strong>{msg.sender}:</strong> {msg.text}
