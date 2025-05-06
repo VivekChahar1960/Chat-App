@@ -11,8 +11,8 @@ const ChatApp = () => {
   const [name, setName] = useState('');
   const [tempName, setTempName] = useState('');
 
-  const messagesEndRef = useRef(null);  // Ref for auto-scrolling
-  const chatMessagesRef = useRef(null); // Ref for chat message container
+  const chatMessagesRef = useRef(null); // Ref for the scrollable chat container
+  const messagesEndRef = useRef(null);  // Ref for the bottom of the message list
 
   // 🔁 Load groups list
   useEffect(() => {
@@ -48,12 +48,9 @@ const ChatApp = () => {
 
   // 🔁 Auto-scroll to the latest message
   useEffect(() => {
-    if (messagesEndRef.current) {
-      // Check if the user is already at the bottom
-      const isAtBottom = chatMessagesRef.current.scrollHeight === chatMessagesRef.current.scrollTop + chatMessagesRef.current.clientHeight;
-      if (isAtBottom) {
-        messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
-      }
+    if (chatMessagesRef.current) {
+      // Scroll to the bottom of the chat container
+      chatMessagesRef.current.scrollTop = chatMessagesRef.current.scrollHeight;
     }
   }, [messages]);
 
@@ -137,17 +134,15 @@ const ChatApp = () => {
             <button className="leave_group" onClick={() => setCurrentGroup('')}>Leave Group</button>
           </div>
 
-          <div className="chat_wrapper" ref={messagesEndRef}>
+          <div className="chat_wrapper">
             <div className='chat_messages' ref={chatMessagesRef}>
               {messages.map((msg) => (
                 <p className='messages_txt' key={msg.id}>
                   <strong>{msg.sender}:</strong> {msg.text}
                 </p>
               ))}
+              <div ref={messagesEndRef} /> {/* Empty div at the bottom for reference */}
             </div>
-
-            {/* This is the reference point to scroll to the bottom */}
-            <div  />
 
             <form className="chat_input_bar" onSubmit={sendMessage}>
               <input
