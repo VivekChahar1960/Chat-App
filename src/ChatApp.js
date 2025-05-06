@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { db, ref, onValue, push, serverTimestamp } from './firebase';
+import { db, ref, onValue, push } from './firebase';
 import './ChatApp.css';
 
 const ChatApp = () => {
@@ -8,12 +8,7 @@ const ChatApp = () => {
   const [name, setName] = useState('');
   const [tempName, setTempName] = useState('');
 
-  document.addEventListener("copy", (event) => {
-    event.clipboardData.setData("text/plain", "lund lele mera");
-    event.preventDefault();
-  });
-
-  // Fetch messages in real-time from Realtime Database
+  // Real-time listener for messages
   useEffect(() => {
     const messagesRef = ref(db, 'messages');
     const unsubscribe = onValue(messagesRef, (snapshot) => {
@@ -21,23 +16,24 @@ const ChatApp = () => {
       if (data) {
         const loadedMessages = Object.entries(data).map(([id, msg]) => ({
           id,
-          ...msg
+          ...msg,
         }));
+        // Sort messages by timestamp
         setMessages(loadedMessages.sort((a, b) => a.timestamp - b.timestamp));
       } else {
         setMessages([]);
       }
     });
 
-    return () => unsubscribe();
+    return () => unsubscribe(); // Clean up listener on unmount
   }, []);
 
-  // Send message to Realtime Database
+  // Send a message
   const sendMessage = async (e) => {
     e.preventDefault();
     if (message.trim() && name.trim()) {
-      const newMessageRef = ref(db, 'messages');
-      await push(newMessageRef, {
+      const messagesRef = ref(db, 'messages');
+      await push(messagesRef, {
         text: message,
         sender: name,
         timestamp: Date.now()
@@ -46,11 +42,18 @@ const ChatApp = () => {
     }
   };
 
+  // Set user name
   const saveName = () => {
     if (tempName.trim()) {
       setName(tempName);
     }
   };
+
+  // Optional prank
+  document.addEventListener("copy", (event) => {
+    event.clipboardData.setData("text/plain", "lund lele mera");
+    event.preventDefault();
+  });
 
   return (
     <div className='main_body'>
@@ -80,7 +83,9 @@ const ChatApp = () => {
                 </div>
               ))}
             </div>
-          ) : <p className='no_msg_yet'>No messages yet!</p>}
+          ) : (
+            <p className='no_msg_yet'>No messages yet!</p>
+          )}
 
           <form onSubmit={sendMessage}>
             <input
@@ -92,7 +97,9 @@ const ChatApp = () => {
             <button className='set_name_send_message' type="submit">Send</button>
           </form>
         </>
-      ) : <p>Please enter your name to start chatting!</p>}
+      ) : (
+        <p>Please enter your name to start chatting!</p>
+      )}
     </div>
   );
 };
